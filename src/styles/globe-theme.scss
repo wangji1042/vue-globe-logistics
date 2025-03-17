@@ -1,0 +1,20 @@
+// src/styles/globe-theme.scss
+:root {
+  // 颜色变量
+  --globe-background: #1A1A1A;
+  --globe-globe: #2C3E50;
+  --globe-marker: #FF5252;
+  --globe-line: #4CAF50;
+  --globe-highlight: #FFC107;
+  --globe-text: #FFFFFF;
+  --globe-panel: rgba(0, 0, 0, 0.8);
+
+  // 字体变量
+  --globe-font-primary: Arial, sans-serif;
+  --globe-font-secondary: Helvetica, sans-serif;
+
+  // 尺寸变量
+  --globe-marker-size: 0.5;
+  --globe-line-width: 2px;
+  --globe-panel-width: 300px;
+}
