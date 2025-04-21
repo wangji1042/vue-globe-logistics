@@ -1,4 +1,4 @@
-// src/components/Globe/useAnimations.ts
+// src/components/Global/useAnimations.ts
 import * as THREE from 'three';
 import { gsap } from 'gsap';
 

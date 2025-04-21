@@ -1,4 +1,4 @@
-// src/components/Globe/usePerformanceMonitoring.ts
+// src/components/Global/usePerformanceMonitoring.ts
 import Stats from 'stats.js';
 import { ref, onMounted, onUnmounted } from 'vue';
 import * as THREE from 'three';

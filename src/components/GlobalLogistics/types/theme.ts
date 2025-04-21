@@ -1,9 +1,9 @@
-// src/components/Globe/types/theme.ts
-export interface GlobeTheme {
+// src/components/Global/types/theme.ts
+export interface GlobalTheme {
   name: string;
   colors: {
     background: string;
-    globe: string;
+    global: string;
     marker: string;
     line: string;
     highlight: string;
@@ -27,12 +27,12 @@ export interface GlobeTheme {
   };
 }
 
-export const defaultThemes: Record<string, GlobeTheme> = {
+export const defaultThemes: Record<string, GlobalTheme> = {
   light: {
     name: 'Light Theme',
     colors: {
       background: '#FFFFFF',
-      globe: '#E8F4F8',
+      global: '#E8F4F8',
       marker: '#FF4444',
       line: '#2196F3',
       highlight: '#FFA726',
@@ -59,7 +59,7 @@ export const defaultThemes: Record<string, GlobeTheme> = {
     name: 'Dark Theme',
     colors: {
       background: '#1A1A1A',
-      globe: '#2C3E50',
+      global: '#2C3E50',
       marker: '#FF5252',
       line: '#4CAF50',
       highlight: '#FFC107',

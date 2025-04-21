@@ -1,4 +1,4 @@
-<!-- src/components/Globe/VisualizationPanel.vue -->
+<!-- src/components/Global/VisualizationPanel.vue -->
 <template>
   <div class="visualization-panel">
     <div class="mode-selector">
@@ -203,10 +203,10 @@ watch(
 
 <style lang="scss" scoped>
 .visualization-panel {
-  background: var(--globe-panel);
+  background: var(--global-panel);
   padding: 15px;
   border-radius: 8px;
-  color: var(--globe-text);
+  color: var(--global-text);
 
   .mode-selector {
     margin-bottom: 20px;

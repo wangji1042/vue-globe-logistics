@@ -1,4 +1,4 @@
-// src/components/Globe/types/data.ts
+// src/components/Global/types/data.ts
 export interface GeoPoint {
   latitude: number;
   longitude: number;
@@ -21,7 +21,7 @@ export interface FlightRoute {
   data?: Record<string, any>;
 }
 
-export interface GlobeData {
+export interface GlobalData {
   version: string;
   cities: City[];
   routes: FlightRoute[];

@@ -1,8 +1,8 @@
 import { createPinia } from 'pinia';
 import useAppStore from './modules/app/index';
-import useGlobeStore from './modules/globe/index';
+import useGlobalStore from './modules/global/index';
 
 const pinia = createPinia();
 
-export { useAppStore, useGlobeStore };
+export { useAppStore, useGlobalStore };
 export default pinia;

@@ -1,4 +1,4 @@
-<!-- src/components/Globe/InteractionPanel.vue -->
+<!-- src/components/Global/InteractionPanel.vue -->
 <template>
   <div class="interaction-panel">
     <div class="mode-selector">
@@ -121,11 +121,11 @@ const selectSearchResult = (result: THREE.Object3D) => {
   position: absolute;
   top: 20px;
   right: 20px;
-  background: var(--globe-panel);
+  background: var(--global-panel);
   padding: 15px;
   border-radius: 8px;
   width: 300px;
-  color: var(--globe-text);
+  color: var(--global-text);
 
   .mode-selector {
     margin-bottom: 20px;
@@ -141,14 +141,14 @@ const selectSearchResult = (result: THREE.Object3D) => {
 
       button {
         padding: 8px;
-        border: 1px solid var(--globe-line);
+        border: 1px solid var(--global-line);
         background: transparent;
-        color: var(--globe-text);
+        color: var(--global-text);
         border-radius: 4px;
         cursor: pointer;
 
         &.active {
-          background: var(--globe-line);
+          background: var(--global-line);
         }
 
         &:hover {
@@ -194,7 +194,7 @@ const selectSearchResult = (result: THREE.Object3D) => {
       padding: 8px;
       background: rgba(255, 255, 255, 0.1);
       border: none;
-      color: var(--globe-text);
+      color: var(--global-text);
       border-radius: 4px;
       margin-top: 5px;
     }

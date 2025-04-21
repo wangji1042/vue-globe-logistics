@@ -1,4 +1,4 @@
-// src/components/Globe/useInteraction.ts
+// src/components/Global/useInteraction.ts
 import * as THREE from 'three';
 import { ref } from 'vue';
 import type { City } from './useCities';

@@ -1,4 +1,4 @@
-# vue-globe-logistics
+# vue-global-logistics
 
 这是一个浏览器端运行的3D地球物流可视化系统
 
@@ -48,7 +48,7 @@
 
 + ⚡️ [Vite 6](https://cn.vitejs.dev) 前端构建工具；
 + 👍🏻 [Vue 3](https://cn.vuejs.org) + [Vue Router](https://router.vuejs.org/zh) + [Pinia](https://pinia.vuejs.org/zh)；
-+ 🔩 [ArcoDesign](https://arco.design/) 组件库；
+<!-- + 🔩 [ArcoDesign](https://arco.design/) 组件库； -->
 + 🎨 [Scss](https://sass-lang.com/) CSS 预处理器；
 
 ## 使用方法

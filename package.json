@@ -1,5 +1,5 @@
 {
-  "name": "vue-globe-logistics",
+  "name": "vue-global-logistics",
   "type": "module",
   "private": true,
   "version": "0.0.1",
@@ -61,7 +61,6 @@
   "dependencies": {
     "@types/gsap": "^1.20.2",
     "@types/stats.js": "^0.17.3",
-    "@types/three": "^0.170.0",
     "@vueuse/core": "^12.0.0",
     "axios": "^1.7.7",
     "dayjs": "^1.11.13",
@@ -82,6 +81,7 @@
     "@eslint/js": "^9.10.0",
     "@types/lodash": "^4.17.7",
     "@types/mockjs": "^1.0.10",
+    "@types/three": "^0.171.0",
     "@typescript-eslint/eslint-plugin": "^8.18.0",
     "@typescript-eslint/parser": "^8.18.0",
     "@vitejs/plugin-vue": "^5.2.1",

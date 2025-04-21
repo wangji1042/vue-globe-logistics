@@ -1,4 +1,4 @@
-<!-- src/components/Globe/DataPanel.vue -->
+<!-- src/components/Global/DataPanel.vue -->
 <template>
   <div class="data-panel">
     <div class="panel-header">
@@ -46,10 +46,10 @@
 
 <script lang="ts" setup>
 import { ref, computed } from 'vue';
-import type { DataFormat, GlobeData } from './types/data';
+import type { DataFormat, GlobalData } from './types/data';
 
 const props = defineProps<{
-  currentData: GlobeData;
+  currentData: GlobalData;
 }>();
 
 const emit = defineEmits<{
@@ -88,10 +88,10 @@ const formatDate = (date?: string) => {
 
 <style lang="scss" scoped>
 .data-panel {
-  background: var(--globe-panel);
+  background: var(--global-panel);
   padding: 15px;
   border-radius: 8px;
-  color: var(--globe-text);
+  color: var(--global-text);
 
   .panel-header {
     display: flex;
@@ -114,8 +114,8 @@ const formatDate = (date?: string) => {
     select {
       padding: 5px;
       border-radius: 4px;
-      background: var(--globe-background);
-      color: var(--globe-text);
+      background: var(--global-background);
+      color: var(--global-text);
     }
   }
 
@@ -128,7 +128,7 @@ const formatDate = (date?: string) => {
     button {
       padding: 8px 16px;
       border-radius: 4px;
-      background: var(--globe-line);
+      background: var(--global-line);
       color: white;
       border: none;
       cursor: pointer;

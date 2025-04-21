@@ -1,8 +1,8 @@
-// src/store/globe.ts
+// src/store/global.ts
 import { defineStore } from 'pinia';
-import type { City } from '@/components/GlobeLogistics/useCities';
+import type { City } from '@/components/GlobalLogistics/useCities';
 
-const useGlobeStore = defineStore('globe', {
+const useGlobalStore = defineStore('global', {
   state: () => ({
     showLines: true,
     selectedCities: [] as City[],
@@ -27,4 +27,4 @@ const useGlobeStore = defineStore('globe', {
   }
 });
 
-export default useGlobeStore;
+export default useGlobalStore;

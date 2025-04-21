@@ -1,4 +1,4 @@
-<!-- src/components/Globe/LoadingOverlay.vue -->
+<!-- src/components/Global/LoadingOverlay.vue -->
 <template>
   <div class="loading-overlay" v-if="show">
     <div class="loading-content">

@@ -1,4 +1,4 @@
-// src/components/Globe/useAdvancedInteraction.ts
+// src/components/Global/useAdvancedInteraction.ts
 import * as THREE from 'three';
 import { ref, computed } from 'vue';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';

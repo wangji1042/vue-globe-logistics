@@ -1,6 +1,6 @@
-// src/components/Globe/types.ts
-export interface GlobeOptions {
-  globeColor: string;
+// src/components/Global/types.ts
+export interface GlobalOptions {
+  globalColor: string;
   glowColor: string;
   markerColor: string;
   lineColor: string;
@@ -10,8 +10,8 @@ export interface GlobeOptions {
   rotationSpeed: number;
 }
 
-export const defaultOptions: GlobeOptions = {
-  globeColor: '#1B1B1B',
+export const defaultOptions: GlobalOptions = {
+  globalColor: '#1B1B1B',
   glowColor: '#000080',
   markerColor: '#FF4444',
   lineColor: '#00FF00',

@@ -1,35 +1,34 @@
 <template>
-  <div>3D地球物流可视化系统</div>
-  <GlobeLogistics
-    :showPanel="true"
-    :showPerformance="true"
+  <GlobalLogistics
+    :showPanel="false"
+    :showPerformance="false"
     :options="{
-      globeColor: '#1B1B1B',
+      globalColor: '#1B1B1B',
       markerColor: '#FF0000',
       lineColor: '#00FF00',
       rotationSpeed: 0.002
     }"
     initialTheme="dark"
-    :showThemePanel="true"
-    :showCustomization="true"
-    :showPerformancePanel="true"
-    :showDataPanel="true"
-    :showInteractionPanel="true"
+    :showThemePanel="false"
+    :showCustomization="false"
+    :showPerformancePanel="false"
+    :showDataPanel="false"
+    :showInteractionPanel="false"
     @data-imported="handleDataImported"
     @data-exported="handleDataExported"
     @object-selected="handleObjectSelected"
     @route-created="handleRouteCreated"
     @measurement-complete="handleMeasurement"
-    :showVisualizationPanel="true"
+    :showVisualizationPanel="false"
     :initial-data="myData"
     @visualization-updated="handleUpdate"
-    :showAnimationPanel="true"
+    :showAnimationPanel="false"
     @animation-updated="handleAnimationUpdate"
   />
 </template>
 
 <script lang="ts" setup>
-import GlobeLogistics from '@/components/GlobeLogistics/index.vue';
+import GlobalLogistics from '@/components/GlobalLogistics/index.vue';
 
 const handleDataImported = data => {
   console.log('Data imported:', data);
@@ -71,3 +70,21 @@ const handleAnimationUpdate = state => {
   console.log('Animation state updated:', state);
 };
 </script>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  width: 100%;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+</style>

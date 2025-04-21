@@ -1,5 +1,5 @@
 // 飞线相关逻辑
-// src/components/Globe/useLines.ts
+// src/components/Global/useLines.ts
 import * as THREE from 'three';
 import { ref } from 'vue';
 import type { City } from './useCities';

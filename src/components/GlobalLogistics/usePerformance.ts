@@ -1,4 +1,4 @@
-// src/components/Globe/usePerformance.ts
+// src/components/Global/usePerformance.ts
 import * as THREE from 'three';
 import { ref, watch } from 'vue';
 

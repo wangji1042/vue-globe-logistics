@@ -3,7 +3,7 @@ import svgLoader from 'vite-svg-loader';
 import type { PluginOption } from 'vite';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import removeConsole from 'vite-plugin-remove-console';
-import VueDevTools from 'vite-plugin-vue-devtools';
+// import VueDevTools from 'vite-plugin-vue-devtools';
 
 import configCompressPlugin from './plugin/compress';
 import configVisualizerPlugin from './plugin/visualizer';
@@ -11,7 +11,7 @@ import configVisualizerPlugin from './plugin/visualizer';
 export function pluginsList(): PluginOption[] {
   return [
     vue(),
-    VueDevTools(),
+    // VueDevTools(),
     vueJsx(), // jsx支持
     removeConsole(), // 移除console
     svgLoader({ svgoConfig: {} }), // svg组件化支持

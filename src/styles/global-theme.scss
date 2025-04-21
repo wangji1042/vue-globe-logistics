@@ -1,0 +1,20 @@
+// src/styles/global-theme.scss
+:root {
+  // 颜色变量
+  --global-background: #1a1a1a;
+  --global-global: #2c3e50;
+  --global-marker: #ff5252;
+  --global-line: #4caf50;
+  --global-highlight: #ffc107;
+  --global-text: #ffffff;
+  --global-panel: rgba(0, 0, 0, 0.8);
+
+  // 字体变量
+  --global-font-primary: Arial, sans-serif;
+  --global-font-secondary: Helvetica, sans-serif;
+
+  // 尺寸变量
+  --global-marker-size: 0.5;
+  --global-line-width: 2px;
+  --global-panel-width: 300px;
+}

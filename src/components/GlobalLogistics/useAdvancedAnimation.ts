@@ -1,8 +1,9 @@
-// src/components/Globe/useAdvancedAnimation.ts
+// src/components/Global/useAdvancedAnimation.ts
 import * as THREE from 'three';
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
 import { gsap } from 'gsap';
 import type { City } from './types/data';
+import { toRaw } from 'vue';
 
 interface AnimationOptions {
   duration: number;
@@ -17,10 +18,30 @@ interface ParticleSystemOptions {
   color: string;
   opacity: number;
 }
+/**
+ * 经纬度坐标转换为 3D坐标系
+ * @param {float} opts.lat x
+ * @param {float} opts.lon y
+ * @param {float} opts.radius 球体半径
+ * @param {float} opts.rotation 倾斜
+ */
+function latLongToVector3(opts: any) {
+  opts = opts || {};
+  let lat = opts.lat,
+    lon = opts.lon,
+    radius = opts.radius,
+    rotation = opts.rotation || 0;
+  let phi = (lat * Math.PI) / 180;
+  let theta = (lon * Math.PI) / 180 + rotation;
+  let x = radius * Math.cos(phi) * Math.cos(theta);
+  let y = radius * Math.sin(phi);
+  let z = radius * Math.cos(phi) * Math.sin(theta);
+  return new THREE.Vector3(z, y, x);
+}
 
 export function useAdvancedAnimation(scene: THREE.Scene, camera: THREE.Camera) {
   // 动画状态管理
-  const activeAnimations = ref(new Set<string>());
+  const activeAnimations = ref(new Map<string, (delta: number) => void>());
   const particleSystems = ref(new Map<string, THREE.Points>());
 
   // 相机动画控制
@@ -201,38 +222,36 @@ export function useAdvancedAnimation(scene: THREE.Scene, camera: THREE.Camera) {
   };
 
   // 全球旋转动画
-  const createGlobeRotation = (
-    globe: THREE.Mesh,
+  const createGlobalRotation = (
+    global: THREE.Mesh,
     options: {
       speed?: number;
-      axis?: THREE.Vector3;
-      autoRotate?: boolean;
+      _axis?: THREE.Vector3;
+      _autoRotate?: boolean;
     } = {}
   ) => {
+    if (!global) {
+      console.warn('Global mesh is not provided for rotation');
+      return {
+        animate: () => {}
+      };
+    }
+
     const {
       speed = 0.001,
-      axis = new THREE.Vector3(0, 1, 0),
-      autoRotate = true
+      _axis = new THREE.Vector3(0, 1, 0),
+      _autoRotate = true
     } = options;
 
-    let rotationSpeed = speed;
-    let isRotating = autoRotate;
-
-    const animate = () => {
-      if (!isRotating) return;
-      globe.rotateOnAxis(axis, rotationSpeed);
-    };
-
     return {
-      animate,
-      setSpeed: (newSpeed: number) => {
-        rotationSpeed = newSpeed;
-      },
-      toggleRotation: () => {
-        isRotating = !isRotating;
-      },
-      setRotating: (rotating: boolean) => {
-        isRotating = rotating;
+      animate: () => {
+        try {
+          if (global && global.rotation) {
+            global.rotation.y += speed;
+          }
+        } catch (error) {
+          console.error('Error in global rotation animation:', error);
+        }
       }
     };
   };
@@ -242,46 +261,53 @@ export function useAdvancedAnimation(scene: THREE.Scene, camera: THREE.Camera) {
 
   // 更新所有动画
   const updateAnimations = (delta: number) => {
-    mixer.update(delta);
-    particleSystems.value.forEach(system => {
-      const positions = system.geometry.attributes.position
-        .array as Float32Array;
-      const velocities = system.geometry.attributes.velocity
-        .array as Float32Array;
+    try {
+      // 更新粒子系统
+      particleSystems.value.forEach((system, _key) => {
+        if (system && system.geometry) {
+          const positions = system.geometry.attributes.position.array;
+          const velocities = system.geometry.attributes.velocity.array;
 
-      for (let i = 0; i < positions.length; i += 3) {
-        positions[i] += velocities[i];
-        positions[i + 1] += velocities[i + 1];
-        positions[i + 2] += velocities[i + 2];
+          for (let i = 0; i < positions.length; i += 3) {
+            positions[i] += velocities[i] * delta;
+            positions[i + 1] += velocities[i + 1] * delta;
+            positions[i + 2] += velocities[i + 2] * delta;
+          }
 
-        // 边界检查
-        const distance = Math.sqrt(
-          positions[i] ** 2 + positions[i + 1] ** 2 + positions[i + 2] ** 2
-        );
-
-        if (distance > 100) {
-          positions[i] *= 0.1;
-          positions[i + 1] *= 0.1;
-          positions[i + 2] *= 0.1;
+          system.geometry.attributes.position.needsUpdate = true;
         }
-      }
+      });
 
-      system.geometry.attributes.position.needsUpdate = true;
-    });
+      // 更新其他动画
+      activeAnimations.value.forEach((animation, key) => {
+        if (animation && typeof animation === 'function') {
+          animation(delta);
+        }
+      });
+    } catch (error) {
+      console.error('Error in updateAnimations:', error);
+    }
   };
 
   // 清理函数
   const dispose = () => {
-    mixer.stopAllAction();
-    particleSystems.value.forEach(system => {
-      scene.remove(system);
-      system.geometry.dispose();
-      if (system.material instanceof THREE.Material) {
-        system.material.dispose();
-      }
-    });
-    particleSystems.value.clear();
-    activeAnimations.value.clear();
+    try {
+      // 清理粒子系统
+      particleSystems.value.forEach(system => {
+        if (system) {
+          system.geometry.dispose();
+          if (system.material instanceof THREE.Material) {
+            system.material.dispose();
+          }
+        }
+      });
+      particleSystems.value.clear();
+
+      // 清理动画
+      activeAnimations.value.clear();
+    } catch (error) {
+      console.error('Error in dispose:', error);
+    }
   };
 
   return {
@@ -289,7 +315,7 @@ export function useAdvancedAnimation(scene: THREE.Scene, camera: THREE.Camera) {
     createParticleSystem,
     createFlyLine,
     createCityMarker,
-    createGlobeRotation,
+    createGlobalRotation,
     updateAnimations,
     dispose
   };

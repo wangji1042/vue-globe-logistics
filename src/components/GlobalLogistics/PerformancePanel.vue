@@ -1,4 +1,4 @@
-<!-- src/components/Globe/PerformancePanel.vue -->
+<!-- src/components/Global/PerformancePanel.vue -->
 <template>
   <div class="performance-panel" :class="{ 'is-warning': hasWarnings }">
     <div class="panel-header">
@@ -91,7 +91,7 @@ const exportPerformanceReport = () => emit('export-report');
   position: absolute;
   left: 20px;
   top: 20px;
-  background: var(--globe-panel);
+  background: var(--global-panel);
   padding: 15px;
   border-radius: 8px;
   min-width: 250px;
@@ -109,7 +109,7 @@ const exportPerformanceReport = () => emit('export-report');
 
   h3 {
     margin: 0;
-    color: var(--globe-text);
+    color: var(--global-text);
   }
 }
 
@@ -120,9 +120,9 @@ const exportPerformanceReport = () => emit('export-report');
   button {
     padding: 4px 8px;
     border-radius: 4px;
-    border: 1px solid var(--globe-line);
+    border: 1px solid var(--global-line);
     background: transparent;
-    color: var(--globe-text);
+    color: var(--global-text);
     cursor: pointer;
 
     &:hover {
@@ -138,7 +138,7 @@ const exportPerformanceReport = () => emit('export-report');
     margin-bottom: 8px;
 
     .label {
-      color: var(--globe-text);
+      color: var(--global-text);
       opacity: 0.8;
     }
 
@@ -165,7 +165,7 @@ const exportPerformanceReport = () => emit('export-report');
 
   h4 {
     margin: 0 0 10px;
-    color: var(--globe-text);
+    color: var(--global-text);
   }
 
   ul {

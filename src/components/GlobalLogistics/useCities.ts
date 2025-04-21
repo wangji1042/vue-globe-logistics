@@ -1,7 +1,7 @@
 // 城市标注点相关逻辑
-// src/components/Globe/useCities.ts
+// src/components/Global/useCities.ts
 import * as THREE from 'three';
-import { ref } from 'vue';
+import { ref, markRaw } from 'vue';
 
 // 城市数据类型
 export interface City {
@@ -19,7 +19,7 @@ const defaultCities: City[] = [
   // 可以添加更多城市
 ];
 
-export function useCities(scene: THREE.Scene, radius: number = 50) {
+export function useCities(earth: THREE.Mesh, radius: number = 2) {
   const cities = ref<City[]>(defaultCities);
   const cityMeshes = ref<THREE.Mesh[]>([]);
 
@@ -41,16 +41,15 @@ export function useCities(scene: THREE.Scene, radius: number = 50) {
 
   // 创建城市标记点
   const createCityMesh = () => {
-    // 创建一个小球体作为标记
-    const geometry = new THREE.SphereGeometry(0.5, 16, 16);
+    const geometry = new THREE.SphereGeometry(0.02, 16, 16);
     const material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
 
     cities.value.forEach(city => {
       const position = latLongToVector3(city.latitude, city.longitude, radius);
-      const cityMesh = new THREE.Mesh(geometry, material);
+      const cityMesh = markRaw(new THREE.Mesh(geometry, material));
       cityMesh.position.copy(position);
       cityMesh.userData = city;
-      scene.add(cityMesh);
+      earth.add(cityMesh);
       cityMeshes.value.push(cityMesh);
     });
   };
@@ -58,13 +57,13 @@ export function useCities(scene: THREE.Scene, radius: number = 50) {
   // 添加新城市
   const addCity = (city: City) => {
     cities.value.push(city);
-    const geometry = new THREE.SphereGeometry(0.5, 16, 16);
+    const geometry = new THREE.SphereGeometry(0.02, 16, 16);
     const material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
     const position = latLongToVector3(city.latitude, city.longitude, radius);
-    const cityMesh = new THREE.Mesh(geometry, material);
+    const cityMesh = markRaw(new THREE.Mesh(geometry, material));
     cityMesh.position.copy(position);
     cityMesh.userData = city;
-    scene.add(cityMesh);
+    earth.add(cityMesh);
     cityMeshes.value.push(cityMesh);
   };
 
@@ -75,7 +74,7 @@ export function useCities(scene: THREE.Scene, radius: number = 50) {
       if (mesh.material instanceof THREE.Material) {
         mesh.material.dispose();
       }
-      scene.remove(mesh);
+      earth.remove(mesh);
     });
     cityMeshes.value = [];
   };

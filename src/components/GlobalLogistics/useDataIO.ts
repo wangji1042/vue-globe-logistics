@@ -1,9 +1,9 @@
-// src/components/Globe/useDataIO.ts
+// src/components/Global/useDataIO.ts
 import { ref } from 'vue';
-import type { GlobeData, DataFormat, City, FlightRoute } from './types/data';
+import type { GlobalData, DataFormat, City, FlightRoute } from './types/data';
 
 export function useDataIO() {
-  const currentData = ref<GlobeData>({
+  const currentData = ref<GlobalData>({
     version: '1.0',
     cities: [],
     routes: [],
@@ -71,7 +71,7 @@ export function useDataIO() {
   ): Promise<boolean> => {
     try {
       const content = await file.text();
-      let data: GlobeData;
+      let data: GlobalData;
 
       switch (format) {
         case 'json':
@@ -108,7 +108,7 @@ export function useDataIO() {
   };
 
   // CSV解析
-  const parseCSV = (content: string): GlobeData => {
+  const parseCSV = (content: string): GlobalData => {
     const lines = content.split('\n');
     const cities: City[] = [];
     const routes: FlightRoute[] = [];
@@ -159,7 +159,7 @@ export function useDataIO() {
   };
 
   // GeoJSON解析
-  const parseGeoJSON = (content: string): GlobeData => {
+  const parseGeoJSON = (content: string): GlobalData => {
     const geojson = JSON.parse(content);
     const cities: City[] = [];
     const routes: FlightRoute[] = [];
@@ -200,7 +200,7 @@ export function useDataIO() {
   // 导出数据
   const exportData = async (format: DataFormat = 'json'): Promise<string> => {
     let content: string;
-    const fileName = `globe-data-${new Date().toISOString()}`;
+    const fileName = `global-data-${new Date().toISOString()}`;
 
     switch (format) {
       case 'json':
@@ -236,7 +236,7 @@ export function useDataIO() {
   };
 
   // 转换为CSV
-  const convertToCSV = (data: GlobeData): string => {
+  const convertToCSV = (data: GlobalData): string => {
     let csv = 'ID,Name,Country,Latitude,Longitude\n';
 
     // 添加城市数据
@@ -257,7 +257,7 @@ export function useDataIO() {
   };
 
   // 转换为GeoJSON
-  const convertToGeoJSON = (data: GlobeData): string => {
+  const convertToGeoJSON = (data: GlobalData): string => {
     const features = [
       // 添加城市点
       ...data.cities.map(city => ({

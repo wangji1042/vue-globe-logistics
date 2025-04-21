@@ -1,4 +1,4 @@
-<!-- src/components/Globe/AnimationPanel.vue -->
+<!-- src/components/Global/AnimationPanel.vue -->
 <template>
   <div class="animation-panel">
     <div class="panel-section">
@@ -6,25 +6,25 @@
 
       <!-- 全球旋转控制 -->
       <div class="control-group">
-        <h4>Globe Rotation</h4>
+        <h4>Global Rotation</h4>
         <div class="control-item">
           <label>Auto Rotate</label>
           <input
             type="checkbox"
-            v-model="globeRotation.enabled"
-            @change="updateGlobeRotation"
+            v-model="globalRotation.enabled"
+            @change="updateGlobalRotation"
           />
         </div>
         <div class="control-item">
           <label>Speed</label>
           <input
             type="range"
-            v-model="globeRotation.speed"
+            v-model="globalRotation.speed"
             min="0"
             max="0.01"
             step="0.001"
-            :disabled="!globeRotation.enabled"
-            @input="updateGlobeRotation"
+            :disabled="!globalRotation.enabled"
+            @input="updateGlobalRotation"
           />
         </div>
       </div>
@@ -125,14 +125,14 @@
 import { ref, watch } from 'vue';
 
 const emit = defineEmits<{
-  (e: 'update:globe-rotation', options: any): void;
+  (e: 'update:global-rotation', options: any): void;
   (e: 'update:particles', options: any): void;
   (e: 'update:markers', options: any): void;
   (e: 'update:lines', options: any): void;
 }>();
 
 // 控制状态
-const globeRotation = ref({
+const globalRotation = ref({
   enabled: true,
   speed: 0.001
 });
@@ -154,8 +154,8 @@ const lines = ref({
 });
 
 // 更新处理器
-const updateGlobeRotation = () => {
-  emit('update:globe-rotation', globeRotation.value);
+const updateGlobalRotation = () => {
+  emit('update:global-rotation', globalRotation.value);
 };
 
 const updateParticles = () => {
@@ -172,9 +172,9 @@ const updateLines = () => {
 
 // 监听变化
 watch(
-  [globeRotation, particles, markers, lines],
+  [globalRotation, particles, markers, lines],
   () => {
-    updateGlobeRotation();
+    updateGlobalRotation();
     updateParticles();
     updateMarkers();
     updateLines();
@@ -185,10 +185,10 @@ watch(
 
 <style lang="scss" scoped>
 .animation-panel {
-  background: var(--globe-panel);
+  background: var(--global-panel);
   padding: 15px;
   border-radius: 8px;
-  color: var(--globe-text);
+  color: var(--global-text);
 
   .panel-section {
     h3 {
@@ -207,7 +207,7 @@ watch(
 
     h4 {
       margin-bottom: 10px;
-      color: var(--globe-highlight);
+      color: var(--global-highlight);
     }
   }
 
