@@ -183,6 +183,7 @@ import { useDataVisualization } from './useDataVisualization';
 import VisualizationPanel from './VisualizationPanel.vue';
 import { useAdvancedAnimation } from './useAdvancedAnimation';
 import AnimationPanel from './AnimationPanel.vue';
+import { useStarfield } from './useStarfield';
 
 const props = defineProps({
   showPanel: { type: Boolean, default: true },
@@ -255,6 +256,8 @@ const cleanupFunctions: (() => void)[] = [];
 // let earthMaterial: THREE.MeshPhongMaterial | null = null;
 // let earthTexture: THREE.Texture | null = null;
 const earth = ref<THREE.Mesh | null>(null); // Keep ref for the earth model
+const earthGroup = ref<THREE.Group | null>(null);
+const starfield = ref<THREE.Points | null>(null);
 
 // 控制相关 (添加回来)
 const controls = ref<{
@@ -309,7 +312,7 @@ onMounted(() => {
 
       // --- Create Scene, Camera, Renderer (Inlined + markRaw) ---
       const _scene = markRaw(new THREE.Scene());
-      _scene.background = new THREE.Color(0x111111); // Set background if desired
+      _scene.background = new THREE.Color(0x020210);
       scene.value = _scene;
 
       const _camera = markRaw(
@@ -394,9 +397,19 @@ onMounted(() => {
 
       // 4. Create and Mark Mesh
       const earthMesh = markRaw(new THREE.Mesh(geometry, material));
-      scene.value.add(earthMesh);
-      earth.value = earthMesh; // Assign to component ref
-      console.log('Earth mesh added directly to scene.');
+      earth.value = earthMesh;
+
+      // 5. Create starfield and group with earth so they rotate together
+      const { createStarfield } = useStarfield();
+      const starfieldPoints = createStarfield();
+      starfield.value = starfieldPoints;
+
+      const group = markRaw(new THREE.Group());
+      group.add(starfieldPoints);
+      group.add(earthMesh);
+      scene.value.add(group);
+      earthGroup.value = group;
+      console.log('Earth and starfield added to scene.');
 
       // --- Initialize Controls ---
       if (camera.value && canvasRef.value) {
@@ -478,9 +491,8 @@ onMounted(() => {
       const animate = () => {
         animationFrameId.value = requestAnimationFrame(animate);
 
-        if (earth.value) {
-          // Rotate the earth
-          earth.value.rotation.y += 0.001;
+        if (earthGroup.value) {
+          earthGroup.value.rotation.y += mergedOptions.value.rotationSpeed;
         }
 
         // Update controls IF/WHEN re-added
@@ -631,16 +643,23 @@ onUnmounted(() => {
   if (animationFrameId.value) cancelAnimationFrame(animationFrameId.value);
 
   // Dispose Three.js objects created locally
+  if (starfield.value) {
+    const { dispose: disposeStarfield } = useStarfield();
+    disposeStarfield(starfield.value);
+    starfield.value = null;
+  }
   if (earth.value) {
     const mesh = earth.value;
     mesh.geometry?.dispose();
     if (mesh.material instanceof THREE.MeshPhongMaterial) {
-      // Check type
-      mesh.material.map?.dispose(); // Dispose texture
+      mesh.material.map?.dispose();
       mesh.material.dispose();
     }
-    scene.value?.remove(mesh); // Remove from scene
     console.log('Earth mesh disposed.');
+  }
+  if (earthGroup.value) {
+    scene.value?.remove(earthGroup.value);
+    earthGroup.value = null;
   }
   // Dispose lights?
   scene.value?.traverse(object => {
@@ -666,7 +685,9 @@ onUnmounted(() => {
   scene.value = null;
   camera.value = null;
   renderer.value = null;
-  earth.value = null; // Clear earth ref
+  earth.value = null;
+  starfield.value = null;
+  earthGroup.value = null;
 
   console.log('清理完成 (Inlined Earth)。');
 });
