@@ -1,7 +1,5 @@
 <template>
   <GlobalLogistics
-    :showPanel="false"
-    :showPerformance="false"
     :options="{
       globalColor: '#1B1B1B',
       markerColor: '#FF0000',
@@ -9,20 +7,22 @@
       rotationSpeed: 0.002
     }"
     initialTheme="dark"
+    :initial-data="myData"
+    :showPanel="false"
+    :showPerformance="false"
     :showThemePanel="false"
     :showCustomization="false"
-    :showPerformancePanel="false"
+    :showPerformancePanel="true"
     :showDataPanel="false"
     :showInteractionPanel="false"
+    :showVisualizationPanel="false"
+    :showAnimationPanel="false"
     @data-imported="handleDataImported"
     @data-exported="handleDataExported"
     @object-selected="handleObjectSelected"
     @route-created="handleRouteCreated"
     @measurement-complete="handleMeasurement"
-    :showVisualizationPanel="false"
-    :initial-data="myData"
     @visualization-updated="handleUpdate"
-    :showAnimationPanel="false"
     @animation-updated="handleAnimationUpdate"
   />
 </template>

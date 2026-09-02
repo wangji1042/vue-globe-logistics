@@ -54,25 +54,35 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue';
+import { usePerformanceMonitoring } from './usePerformanceMonitoring';
 
 const props = defineProps<{
-  metrics: {
-    fps: number;
-    memory: {
-      used: number;
-      total: number;
-    };
-    drawCalls: number;
-    triangles: number;
-  };
-  isMonitoring: boolean;
+  // metrics: {
+  //   fps: number;
+  //   memory: {
+  //     used: number;
+  //     total: number;
+  //   };
+  //   drawCalls: number;
+  //   triangles: number;
+  // };
+  // isMonitoring: boolean;
   optimizationTips: string[];
 }>();
 
 const emit = defineEmits<{
-  (e: 'toggle-monitoring'): void;
-  (e: 'export-report'): void;
+  (e: 'toggleMonitoring'): void;
+  (e: 'exportReport'): void;
 }>();
+
+const {
+  metrics,
+  isMonitoring,
+  startMonitoring,
+  stopMonitoring,
+  exportPerformanceReport,
+  getOptimizationTips
+} = usePerformanceMonitoring(renderer, scene);
 
 const hasWarnings = computed(() => props.optimizationTips?.length > 0);
 
@@ -82,8 +92,13 @@ const getFPSClass = computed(() => {
   return 'good';
 });
 
-const toggleMonitoring = () => emit('toggle-monitoring');
-const exportPerformanceReport = () => emit('export-report');
+const toggleMonitoringFn = () => {
+  emit('toggleMonitoring');
+};
+const exportPerformanceReportFn = () => {
+  exportPerformanceReport();
+  emit('exportReport');
+};
 </script>
 
 <style lang="scss" scoped>

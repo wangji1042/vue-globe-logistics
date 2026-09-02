@@ -171,7 +171,6 @@ import { useAnimations } from './useAnimations';
 import LoadingOverlay from './LoadingOverlay.vue';
 import { defaultOptions, type GlobalOptions } from './types';
 import { useTheme } from './useTheme';
-import '@/styles/global-theme.scss';
 import { usePerformanceMonitoring } from './usePerformanceMonitoring';
 import PerformancePanel from './PerformancePanel.vue';
 import { useDataIO } from './useDataIO';
@@ -506,12 +505,14 @@ onMounted(() => {
           scene.value &&
           camera.value
         ) {
-          console.log(
-            'Camera Position:',
-            camera.value.position.x,
-            camera.value.position.y,
-            camera.value.position.z
-          ); // <-- 添加日志
+          // 添加日志
+          // console.log(
+          //   'Camera Position:',
+          //   camera.value.position.x,
+          //   camera.value.position.y,
+          //   camera.value.position.z
+          // );
+
           try {
             renderer.value.render(scene.value, camera.value);
           } catch (renderError) {
@@ -528,9 +529,11 @@ onMounted(() => {
         }
       };
 
-      isInitialized.value = true;
       // Loading state is handled by loadingManager now
-      animate(); // Start the loop only after successful initialization
+      isInitialized.value = true;
+
+      // Start the loop only after successful initialization
+      animate();
       console.log('Inlined Earth Initialized');
     } catch (initError) {
       console.error('初始化失败 (Inlined Earth):', initError);

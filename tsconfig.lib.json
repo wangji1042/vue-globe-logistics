@@ -7,7 +7,7 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "esModuleInterop": true,
-    "baseUrl": ".",
+    "baseUrl": "src",
     "importHelpers": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
@@ -26,11 +26,12 @@
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": false,
     "paths": {
-      "@/*": ["src/*"],
-      "@config/*": ["config/*"]
+      "@/*": ["./*"]
     },
-    "types": ["vite/client", "naive-ui/volar"]
+    "types": ["vite/client", "naive-ui/volar"],
+    "rootDir": "src",
+    "declarationDir": "dist/types"
   },
-  "include": ["src/**/*", "src/**/*.vue", "vite.config.ts"],
+  "include": ["components/GlobalLogistics/**/*", "types/**/*", "hooks/**/*", "utils/**/*"],
   "exclude": ["node_modules", "dist", "**/*.js"]
 }
